@@ -35,15 +35,17 @@ public class MainMatrix {
             out("Concurrent thread time, sec: %.3f", duration);
             concurrentThreadSum += duration;
 
+/*
             if (!MatrixUtil.compare(matrixC, concurrentMatrixC)) {
                 System.err.println("Comparison failed");
                 break;
             }
+*/
             count++;
         }
         executor.shutdown();
-        out("\nAverage single thread time, sec: %.3f", singleThreadSum / 5.);
-        out("Average concurrent thread time, sec: %.3f", concurrentThreadSum / 5.);
+        out("\nAverage single thread time, sec: %.3f", singleThreadSum / count);
+        out("Average concurrent thread time, sec: %.3f", concurrentThreadSum / count);
     }
 
     private static void out(String format, double ms) {
