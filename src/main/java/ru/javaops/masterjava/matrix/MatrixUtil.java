@@ -1,6 +1,8 @@
 package ru.javaops.masterjava.matrix;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -11,26 +13,21 @@ import java.util.concurrent.Future;
  */
 public class MatrixUtil {
 
-    // TODO implement parallel multiplication matrixA*matrixB
     public static int[][] concurrentMultiply(int[][] matrixA, int[][] matrixB, ExecutorService executor) throws InterruptedException, ExecutionException {
         final int matrixSize = matrixA.length;
         final int[][] matrixC = new int[matrixSize][matrixSize];
 
         int[][] matrixBT = transpose(matrixB);
 
-        Future[][] futures = new Future[matrixSize][matrixSize];
+        List<Future> futures = new ArrayList<>();
         for (int rowA = 0; rowA < matrixSize; rowA++) {
             for (int rowB = 0; rowB < matrixSize; rowB++) {
-                final int a = rowA, b = rowB;
-                Future<Integer> matrixElement = executor.submit(() -> multiply(matrixA[a], matrixBT[b]));
-                futures[a][b] = matrixElement;
+                Future element = executor.submit(new MatrixMultiply(rowA, rowB, matrixA, matrixBT, matrixC));
+                futures.add(element);
             }
         }
-
-        for (int rowA = 0; rowA < matrixSize; rowA++) {
-            for (int rowB = 0; rowB < matrixSize; rowB++) {
-                matrixC[rowA][rowB] = (int) futures[rowA][rowB].get();
-            }
+        for (Future future : futures) {
+            future.get();
         }
 
         return matrixC;
