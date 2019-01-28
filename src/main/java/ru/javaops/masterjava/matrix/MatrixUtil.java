@@ -21,10 +21,8 @@ public class MatrixUtil {
 
         List<Future> futures = new ArrayList<>();
         for (int rowA = 0; rowA < matrixSize; rowA++) {
-            for (int rowB = 0; rowB < matrixSize; rowB++) {
-                Future element = executor.submit(new MatrixMultiply(rowA, rowB, matrixA, matrixBT, matrixC));
-                futures.add(element);
-            }
+            Future element = executor.submit(new MatrixMultiply(rowA, matrixA, matrixBT, matrixC));
+            futures.add(element);
         }
         for (Future future : futures) {
             future.get();
