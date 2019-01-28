@@ -1,8 +1,9 @@
 package ru.javaops.masterjava.matrix;
 
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 /**
  * gkislin
@@ -15,31 +16,59 @@ public class MatrixUtil {
         final int matrixSize = matrixA.length;
         final int[][] matrixC = new int[matrixSize][matrixSize];
 
+        int[][] matrixBT = transpose(matrixB);
+
+        Future[][] futures = new Future[matrixSize][matrixSize];
+        for (int rowA = 0; rowA < matrixSize; rowA++) {
+            for (int rowB = 0; rowB < matrixSize; rowB++) {
+                final int a = rowA, b = rowB;
+                Future<Integer> matrixElement = executor.submit(() -> multiply(matrixA[a], matrixBT[b]));
+                futures[a][b] = matrixElement;
+            }
+        }
+
+        for (int rowA = 0; rowA < matrixSize; rowA++) {
+            for (int rowB = 0; rowB < matrixSize; rowB++) {
+                matrixC[rowA][rowB] = (int) futures[rowA][rowB].get();
+            }
+        }
+
         return matrixC;
     }
 
-    // TODO optimize by https://habrahabr.ru/post/114797/
     public static int[][] singleThreadMultiply(int[][] matrixA, int[][] matrixB) {
         final int matrixSize = matrixA.length;
         final int[][] matrixC = new int[matrixSize][matrixSize];
 
-        int[][] matrixBT = new int[matrixSize][matrixSize];
-        for (int i = 0; i < matrixSize; i++) {
-            for (int j = 0; j < matrixSize; j++) {
-                matrixBT[j][i] = matrixB[i][j];
-            }
-        }
-
-        for (int i = 0; i < matrixSize; i++) {
-            for (int j = 0; j < matrixSize; j++) {
-                int sum = 0;
-                for (int k = 0; k < matrixSize; k++) {
-                    sum += matrixA[i][k] * matrixBT[j][k];
-                }
-                matrixC[i][j] = sum;
+        int[][] matrixBT = transpose(matrixB);
+        for (int rowA = 0; rowA < matrixSize; rowA++) {
+            for (int rowB = 0; rowB < matrixSize; rowB++) {
+                matrixC[rowA][rowB] = multiply(matrixA[rowA], matrixBT[rowB]);
             }
         }
         return matrixC;
+    }
+
+    private static int[][] transpose(int[][] matrix) {
+        final int matrixSize = matrix.length;
+        int[][] transposedMatrix = new int[matrixSize][matrixSize];
+        for (int row = 0; row < matrixSize; row++) {
+            for (int col = 0; col < matrixSize; col++) {
+                transposedMatrix[col][row] = matrix[row][col];
+            }
+        }
+
+        return transposedMatrix;
+    }
+
+    private static int multiply(int[] rowMatrixA, int[] rowMatrixBT) {
+        final int matrixSize = rowMatrixA.length;
+        int sum = 0;
+        for (int i = 0; i < matrixSize; i++) {
+            sum += rowMatrixA[i] * rowMatrixBT[i];
+        }
+
+        return sum;
     }
 
     public static int[][] create(int size) {
