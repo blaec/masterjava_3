@@ -21,13 +21,35 @@
         <City id="mnsk">Минск</City>
     </Cities>
     <Projects>
-        <Project>
+        <Project id="pj-tj">
             <description>topjava project description</description>
             <name>topjava</name>
         </Project>
-        <Project>
+        <Project id="pj-mj">
             <description>masterjava project description</description>
             <name>masterjava</name>
         </Project>
     </Projects>
+    <Groups>
+        <Group project="pj-tj">
+            <name>topjava01</name>
+            <type>FINISHED</type>
+        </Group>
+        <Group project="pj-tj">
+            <name>topjava02</name>
+            <type>CURRENT</type>
+        </Group>
+        <Group project="pj-tj">
+            <name>topjava03</name>
+            <type>REGISTERING</type>
+        </Group>
+        <Group project="pj-mj">
+            <name>masterjava01</name>
+            <type>CURRENT</type>
+        </Group>
+        <Group project="pj-mj">
+            <name>masterjava02</name>
+            <type>REGISTERING</type>
+        </Group>
+    </Groups>
 </Payload>
