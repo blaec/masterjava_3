@@ -124,4 +124,12 @@ public class Project {
         this.id = value;
     }
 
+    @Override
+    public String toString() {
+        return "Project{" +
+                "description='" + description + '\'' +
+                ", name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                '}';
+    }
 }

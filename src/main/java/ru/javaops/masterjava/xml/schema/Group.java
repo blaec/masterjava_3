@@ -87,8 +87,8 @@ public class Group {
      *     {@link Object }
      *     
      */
-    public Object getProject() {
-        return project;
+    public Project getProject() {
+        return (Project) project;
     }
 
     /**
@@ -127,4 +127,12 @@ public class Group {
         this.id = value;
     }
 
+    @Override
+    public String toString() {
+        return "Group{" +
+                "type=" + type +
+                ", project=" + project +
+                ", id='" + id + '\'' +
+                '}';
+    }
 }
