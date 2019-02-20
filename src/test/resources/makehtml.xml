@@ -1,0 +1,51 @@
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                version="1.0">
+
+    <xsl:template match="/">
+        <html>
+
+            <head>
+                <style type="text/css">
+                    table.tfmt {
+                    border: 1px ;
+                    }
+
+                    td.colfmt {
+                    border: 1px ;
+                    background-color: white;
+                    color: black;
+                    text-align:right;
+                    }
+
+                    th {
+                    background-color: #2E9AFE;
+                    color: white;
+                    }
+
+                </style>
+            </head>
+
+            <body>
+                <table class="tfmt">
+                    <tr>
+                        <th style="width:250px">User:</th>
+                        <th style="width:350px">Email:</th>
+                    </tr>
+
+                    <xsl:param name="projectName" />
+                    <xsl:for-each select="/*[name()='Payload']/*[name()='Users']/*[name()='User']
+                        [@groups[contains(.,$projectName)]]">
+                        <tr>
+                            <td class="colfmt">
+                                <xsl:value-of select="*[name()='fullName']"/>
+                            </td>
+                            <td class="colfmt">
+                                <xsl:value-of select="@email"/>
+                            </td>
+                        </tr>
+                    </xsl:for-each>
+                </table>
+            </body>
+        </html>
+    </xsl:template>
+</xsl:stylesheet>
