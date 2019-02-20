@@ -39,7 +39,7 @@ public class MainXmlStAX {
             }
         }
 
-        List<String> userEmail = new ArrayList<>();
+        Set<String> userEmail = new TreeSet<>();
         try (StaxStreamProcessor processor =
                      new StaxStreamProcessor(Resources.getResource("payload.xml").openStream())) {
             String userName;
@@ -53,7 +53,6 @@ public class MainXmlStAX {
                 }
             }
         }
-        Collections.sort(userEmail);
         System.out.println(userEmail);
 
         final String HTML_START = "<!DOCTYPE html><head></head><body><table border=\"1\"><tr><th>User</th><th>e-mail</th></tr>";
