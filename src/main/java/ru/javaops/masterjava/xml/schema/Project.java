@@ -1,16 +1,14 @@
 
 package ru.javaops.masterjava.xml.schema;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
@@ -24,9 +22,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="description" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element ref="{http://javaops.ru}Group" maxOccurs="unbounded"/>
  *       &lt;/sequence>
- *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}ID" />
+ *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -37,20 +35,17 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "description",
-    "name"
+    "group"
 })
 @XmlRootElement(name = "Project", namespace = "http://javaops.ru")
 public class Project {
 
     @XmlElement(namespace = "http://javaops.ru", required = true)
     protected String description;
-    @XmlElement(namespace = "http://javaops.ru", required = true)
+    @XmlElement(name = "Group", namespace = "http://javaops.ru", required = true)
+    protected List<Group> group;
+    @XmlAttribute(name = "name", required = true)
     protected String name;
-    @XmlAttribute(name = "id", required = true)
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected String id;
 
     /**
      * Gets the value of the description property.
@@ -77,6 +72,35 @@ public class Project {
     }
 
     /**
+     * Gets the value of the group property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the group property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getGroup().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Group }
+     * 
+     * 
+     */
+    public List<Group> getGroup() {
+        if (group == null) {
+            group = new ArrayList<Group>();
+        }
+        return this.group;
+    }
+
+    /**
      * Gets the value of the name property.
      * 
      * @return
@@ -100,36 +124,4 @@ public class Project {
         this.name = value;
     }
 
-    /**
-     * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setId(String value) {
-        this.id = value;
-    }
-
-    @Override
-    public String toString() {
-        return "Project{" +
-                "description='" + description + '\'' +
-                ", name='" + name + '\'' +
-                ", id='" + id + '\'' +
-                '}';
-    }
 }

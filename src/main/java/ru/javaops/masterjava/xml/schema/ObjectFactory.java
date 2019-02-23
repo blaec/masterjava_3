@@ -66,6 +66,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Payload.Projects }
+     * 
+     */
+    public Payload.Projects createPayloadProjects() {
+        return new Payload.Projects();
+    }
+
+    /**
      * Create an instance of {@link Payload.Cities }
      * 
      */
@@ -79,22 +87,6 @@ public class ObjectFactory {
      */
     public Payload.Users createPayloadUsers() {
         return new Payload.Users();
-    }
-
-    /**
-     * Create an instance of {@link Payload.Projects }
-     * 
-     */
-    public Payload.Projects createPayloadProjects() {
-        return new Payload.Projects();
-    }
-
-    /**
-     * Create an instance of {@link Payload.Groups }
-     * 
-     */
-    public Payload.Groups createPayloadGroups() {
-        return new Payload.Groups();
     }
 
     /**

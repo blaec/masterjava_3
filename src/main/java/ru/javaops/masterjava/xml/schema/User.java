@@ -1,9 +1,16 @@
 
 package ru.javaops.masterjava.xml.schema;
 
-import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlIDREF;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlValue;
 
 
 /**
@@ -13,23 +20,14 @@ import java.util.List;
  * 
  * <pre>
  * &lt;complexType>
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="fullName" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *       &lt;/sequence>
- *       &lt;attribute name="email" use="required">
- *         &lt;simpleType>
- *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *             &lt;pattern value="[^@]+@[^.]+\..+"/>
- *           &lt;/restriction>
- *         &lt;/simpleType>
- *       &lt;/attribute>
+ *   &lt;simpleContent>
+ *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
+ *       &lt;attribute name="email" use="required" type="{http://javaops.ru}emailType" />
  *       &lt;attribute name="flag" use="required" type="{http://javaops.ru}flagType" />
  *       &lt;attribute name="city" use="required" type="{http://www.w3.org/2001/XMLSchema}IDREF" />
  *       &lt;attribute name="groups" use="required" type="{http://www.w3.org/2001/XMLSchema}IDREFS" />
- *     &lt;/restriction>
- *   &lt;/complexContent>
+ *     &lt;/extension>
+ *   &lt;/simpleContent>
  * &lt;/complexType>
  * </pre>
  * 
@@ -37,13 +35,13 @@ import java.util.List;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "fullName"
+    "value"
 })
 @XmlRootElement(name = "User", namespace = "http://javaops.ru")
 public class User {
 
-    @XmlElement(namespace = "http://javaops.ru", required = true)
-    protected String fullName;
+    @XmlValue
+    protected String value;
     @XmlAttribute(name = "email", required = true)
     protected String email;
     @XmlAttribute(name = "flag", required = true)
@@ -58,27 +56,27 @@ public class User {
     protected List<Object> groups;
 
     /**
-     * Gets the value of the fullName property.
+     * Gets the value of the value property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getFullName() {
-        return fullName;
+    public String getValue() {
+        return value;
     }
 
     /**
-     * Sets the value of the fullName property.
+     * Sets the value of the value property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setFullName(String value) {
-        this.fullName = value;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     /**
@@ -182,14 +180,4 @@ public class User {
         return this.groups;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "fullName='" + fullName + '\'' +
-                ", email='" + email + '\'' +
-                ", flag=" + flag +
-                ", city=" + city +
-                ", groups=" + groups +
-                '}';
-    }
 }
