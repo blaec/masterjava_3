@@ -10,8 +10,14 @@ import ru.javaops.masterjava.xml.util.Schemas;
 import ru.javaops.masterjava.xml.util.StaxStreamProcessor;
 
 import javax.xml.stream.events.XMLEvent;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.StringWriter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -33,6 +39,23 @@ public class MainXml {
         System.out.println("StAX: " + usersStAX);
 
         writeUsersToHtml(usersStAX, projectName + " users");
+
+        TransformXSLT(projectName);
+    }
+
+    private static void TransformXSLT(String project) throws Exception {
+        Source xml = new StreamSource(new File(Resources.getResource("payload.xml").getPath()));
+        Source xslt = new StreamSource(Resources.getResource("makehtml.xml").getPath());
+
+        StringWriter sw = new StringWriter();
+
+        FileWriter fw = new FileWriter("out/hw02_groups.html");
+        TransformerFactory tFactory = TransformerFactory.newInstance();
+        Transformer trasform = tFactory.newTransformer(xslt);
+        trasform.setParameter("projectName", project);
+        trasform.transform(xml, new StreamResult(sw));
+        fw.write(sw.toString());
+        fw.close();
     }
 
     private static void writeUsersToHtml(Set<User> users, String title) throws Exception {
@@ -53,7 +76,7 @@ public class MainXml {
                     .append(CLOSE_TR);
         }
         html.append(HTML_END);
-        FileWriter fileWriter = new FileWriter(new File("out/hw02_output.html"));
+        FileWriter fileWriter = new FileWriter(new File("out/hw02_users.html"));
         fileWriter.write(html.toString());
         fileWriter.close();
     }

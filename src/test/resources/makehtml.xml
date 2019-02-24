@@ -1,4 +1,5 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:p="http://javaops.ru"
                 version="1.0">
 
     <xsl:template match="/">
@@ -26,21 +27,21 @@
             </head>
 
             <body>
+                <xsl:param name="projectName" />
+                <h1><xsl:value-of select="$projectName"/> groups</h1>
                 <table class="tfmt">
                     <tr>
-                        <th style="width:250px">User:</th>
-                        <th style="width:350px">Email:</th>
+                        <th style="width:250px">Group:</th>
+                        <th style="width:350px">Type:</th>
                     </tr>
 
-                    <xsl:param name="projectName" />
-                    <xsl:for-each select="/*[name()='Payload']/*[name()='Users']/*[name()='User']
-                        [@groups[contains(.,$projectName)]]">
+                    <xsl:for-each select="/p:Payload/p:Projects/p:Project/p:Group[@name[contains(.,$projectName)]]">
                         <tr>
                             <td class="colfmt">
-                                <xsl:value-of select="*[name()='fullName']"/>
+                                <xsl:value-of select="@name"/>
                             </td>
                             <td class="colfmt">
-                                <xsl:value-of select="@email"/>
+                                <xsl:value-of select="@type"/>
                             </td>
                         </tr>
                     </xsl:for-each>
