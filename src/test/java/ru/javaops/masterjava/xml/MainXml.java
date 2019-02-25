@@ -60,7 +60,7 @@ public class MainXml {
 
     private static void writeUsersToHtml(Set<User> users, String title) throws Exception {
         final String HTML_START = "<!DOCTYPE html><head></head><body><h1>" + title +
-                                  "</h1><table border=\"1\"><tr><th>User</th><th>e-mail</th></tr>";
+                "</h1><table border=\"1\"><tr><th>User</th><th>e-mail</th></tr>";
         final String HTML_END = "</table></body></html>";
         final String OPEN_TD = "<td>";
         final String OPEN_TR = "<tr>";
@@ -97,20 +97,11 @@ public class MainXml {
             }
 
             while (processor.doUntil(XMLEvent.START_ELEMENT, "User")) {
-                String email = processor.getAttribure("email");
                 String userGroups = processor.getAttribure("groups");
-                String userName;
-
-                if ((userName = processor.getText()) != null) {
-                    if (groups.stream().anyMatch(userGroups::contains)) {
-                        User user = new User();
-//                        JaxbParser jaxbParser = new JaxbParser(User.class);
-//                        jaxbParser.setSchema(Schemas.ofClasspath("payload.xsd"));
-//                        User user = jaxbParser.unmarshal(Resources.getResource("payload.xml").openStream(), User.class);
-                        user.setEmail(email);
-                        user.setValue(userName);
-                        users.add(user);
-                    }
+                if (groups.stream().anyMatch(userGroups::contains)) {
+                    JaxbParser jaxbParser = new JaxbParser(User.class);
+                    User user = jaxbParser.unmarshal(processor.getReader(), User.class);
+                    users.add(user);
                 }
             }
         }

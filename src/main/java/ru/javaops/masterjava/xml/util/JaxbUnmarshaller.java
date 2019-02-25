@@ -3,6 +3,7 @@ package ru.javaops.masterjava.xml.util;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.stream.XMLStreamReader;
 import javax.xml.validation.Schema;
 import java.io.InputStream;
 import java.io.Reader;
@@ -25,6 +26,10 @@ public class JaxbUnmarshaller {
 
     public synchronized Object unmarshal(Reader reader) throws JAXBException {
         return unmarshaller.unmarshal(reader);
+    }
+
+    public synchronized Object unmarshal(XMLStreamReader reader, Class declaredType) throws JAXBException {
+        return unmarshaller.unmarshal(reader, declaredType).getValue();
     }
 
     public Object unmarshal(String str) throws JAXBException {
