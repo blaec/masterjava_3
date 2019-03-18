@@ -20,7 +20,7 @@ public abstract class CityDao implements AbstractDao {
         return city;
     }
 
-    @SqlUpdate("INSERT INTO cities (name, code) VALUES (:name, :code) ")
+    @SqlUpdate("INSERT INTO cities (name, code) VALUES (:name, :code) ON CONFLICT DO NOTHING")
     @GetGeneratedKeys
     abstract int insertGeneratedId(@BindBean City city);
 
