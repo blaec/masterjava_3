@@ -31,7 +31,7 @@ public abstract class CityDao implements AbstractDao {
     public abstract List<City> getWithLimit(@Bind int limit);
 
     //   http://stackoverflow.com/questions/13223820/postgresql-delete-all-content
-    @SqlUpdate("TRUNCATE cities")
+    @SqlUpdate("TRUNCATE users,cities")
     @Override
     public abstract void clean();
 }

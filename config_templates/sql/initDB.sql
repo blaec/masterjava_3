@@ -37,11 +37,11 @@ CREATE UNIQUE INDEX group_idx ON groups (name);
 
 CREATE TABLE users (
   id          INTEGER PRIMARY KEY DEFAULT nextval('user_seq'),
---   city_id     INTEGER       NOT NULL,
+  city_id     INTEGER       NOT NULL,
   full_name   TEXT          NOT NULL,
   email       TEXT          NOT  NULL,
-  flag        user_flag     NOT NULL
---   FOREIGN KEY (city_id) REFERENCES cities (id) ON DELETE CASCADE
+  flag        user_flag     NOT NULL,
+  FOREIGN KEY (city_id) REFERENCES cities (id) ON DELETE CASCADE
 );
 CREATE UNIQUE INDEX email_idx ON users (email);
 
