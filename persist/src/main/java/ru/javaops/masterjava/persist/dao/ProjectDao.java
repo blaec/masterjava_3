@@ -31,7 +31,7 @@ public abstract class ProjectDao implements AbstractDao {
     public abstract List<Project> getWithLimit(@Bind int limit);
 
     //   http://stackoverflow.com/questions/13223820/postgresql-delete-all-content
-    @SqlUpdate("TRUNCATE projects")
+    @SqlUpdate("TRUNCATE groups, projects")
     @Override
     public abstract void clean();
 }
