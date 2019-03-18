@@ -16,7 +16,7 @@ public class CityTestData {
     public static void init() {
         KYEV = new City("Киев", "kiv");
         MINSK = new City("Минск", "mnsk");
-        MOSCOW = new City("Москва", "mos");
+        MOSCOW = new City("Москва", "mow");
         SEINT_PETERSBURG = new City("Санкт-Питербург", "spb");
         FIRST3_CITIES = ImmutableList.of(KYEV, MINSK, MOSCOW);
     }

@@ -30,6 +30,9 @@ public abstract class CityDao implements AbstractDao {
     @SqlQuery("SELECT * FROM cities ORDER BY name, code LIMIT :it")
     public abstract List<City> getWithLimit(@Bind int limit);
 
+    @SqlQuery("SELECT c.id FROM cities c WHERE c.code = :it")
+    public abstract int getCityId(@Bind String code);
+
     //   http://stackoverflow.com/questions/13223820/postgresql-delete-all-content
     @SqlUpdate("TRUNCATE users,cities")
     @Override
