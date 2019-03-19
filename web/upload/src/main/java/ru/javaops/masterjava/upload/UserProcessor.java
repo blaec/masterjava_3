@@ -16,10 +16,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.XMLEvent;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -61,6 +58,10 @@ public class UserProcessor {
 
         while (processor.doUntil(XMLEvent.START_ELEMENT, "User")) {
             int cityId = cityDao.getCityId(processor.getAttribute("city"));
+            if (cityId == 0) {
+                log.info("The city code {} does not exist in database", processor.getAttribute("city"));
+                throw new NoSuchElementException();
+            }
             ru.javaops.masterjava.xml.schema.User xmlUser = unmarshaller.unmarshal(processor.getReader(), ru.javaops.masterjava.xml.schema.User.class);
             final User user = new User(id++, cityId, xmlUser.getValue(), xmlUser.getEmail(), UserFlag.valueOf(xmlUser.getFlag().value()));
             chunk.add(user);
