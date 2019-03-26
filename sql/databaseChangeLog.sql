@@ -32,3 +32,14 @@ CREATE TABLE user_group (
   group_id INTEGER NOT NULL REFERENCES groups (id),
   CONSTRAINT users_group_idx UNIQUE (user_id, group_id)
 );
+
+--changeset blaec:3
+CREATE TABLE emails (
+  id        INTEGER PRIMARY KEY DEFAULT nextval('common_seq'),
+  send_to   TEXT      NOT NULL,
+  send_cc   TEXT,
+  subject   TEXT      NOT NULL,
+  body      TEXT      NOT NULL,
+  sent      TIMESTAMP NOT NULL
+)
+--rollback DROP TABLE emails
