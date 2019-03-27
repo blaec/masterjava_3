@@ -1,7 +1,8 @@
-package ru.javaops.masterjava.persist.model;
+package ru.javaops.masterjava.service.dao;
 
 import com.bertoncelj.jdbi.entitymapper.Column;
 import lombok.*;
+import ru.javaops.masterjava.persist.model.BaseEntity;
 
 import java.time.LocalDateTime;
 

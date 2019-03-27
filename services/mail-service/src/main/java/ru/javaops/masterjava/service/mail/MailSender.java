@@ -8,10 +8,10 @@ import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 import ru.javaops.masterjava.config.Configs;
 import ru.javaops.masterjava.persist.DBIProvider;
-import ru.javaops.masterjava.persist.dao.MessageDao;
-import ru.javaops.masterjava.persist.model.Message;
+import ru.javaops.masterjava.persist.DBITestProvider;
+import ru.javaops.masterjava.service.dao.Message;
+import ru.javaops.masterjava.service.dao.MessageDao;
 
-import java.sql.DriverManager;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,16 +19,9 @@ import java.util.List;
 public class MailSender {
     static void sendMail(List<Addressee> to, List<Addressee> cc, String subject, String body) {
         Config db = Configs.getConfig("persist.conf","db");
-        DBIProvider.init(() -> {
-            try {
-                Class.forName("org.postgresql.Driver");
-            } catch (ClassNotFoundException e) {
-                throw new IllegalStateException("PostgreSQL driver not found", e);
-            }
-            return DriverManager.getConnection(db.getString("url"), db.getString("user"), db.getString("password"));
-        });
-
+        DBITestProvider.initDBI(db.getString("url"), db.getString("user"), db.getString("password"));
         MessageDao dao = DBIProvider.getDao(MessageDao.class);
+
         Config mail = Configs.getConfig("mail.conf","mail");
 
         Email email = new SimpleEmail();

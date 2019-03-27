@@ -1,11 +1,11 @@
-package ru.javaops.masterjava.persist.dao;
+package ru.javaops.masterjava.service.dao;
 
 import com.bertoncelj.jdbi.entitymapper.EntityMapperFactory;
 import org.skife.jdbi.v2.sqlobject.BindBean;
 import org.skife.jdbi.v2.sqlobject.GetGeneratedKeys;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapperFactory;
-import ru.javaops.masterjava.persist.model.Message;
+import ru.javaops.masterjava.persist.dao.AbstractDao;
 
 @RegisterMapperFactory(EntityMapperFactory.class)
 public abstract class MessageDao implements AbstractDao {
