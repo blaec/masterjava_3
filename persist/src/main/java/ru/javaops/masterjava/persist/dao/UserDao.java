@@ -40,6 +40,9 @@ public abstract class UserDao implements AbstractDao {
     @SqlUpdate("INSERT INTO users (id, full_name, email, flag, city_ref) VALUES (:id, :fullName, :email, CAST(:flag AS USER_FLAG), :cityRef) ")
     abstract void insertWitId(@BindBean User user);
 
+    @SqlQuery("SELECT u.id FROM users u WHERE u.id = :it")
+    public abstract int getUserId(@Bind int it);
+
     @SqlQuery("SELECT * FROM users ORDER BY full_name, email LIMIT :it")
     public abstract List<User> getWithLimit(@Bind int limit);
 

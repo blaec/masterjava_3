@@ -11,13 +11,14 @@ import ru.javaops.masterjava.persist.model.type.GroupType;
 import ru.javaops.masterjava.xml.util.StaxStreamProcessor;
 
 import javax.xml.stream.XMLStreamException;
+import java.util.Set;
 
 @Slf4j
 public class GroupProjectProcessor {
     private final ProjectDao projectDao = DBIProvider.getDao(ProjectDao.class);
     private final GroupDao groupDao = DBIProvider.getDao(GroupDao.class);
 
-    public void process(StaxStreamProcessor processor) throws XMLStreamException {
+    public Set<String> process(StaxStreamProcessor processor) throws XMLStreamException {
         val projectMap = projectDao.getAsMap();
         val groupMap = groupDao.getAsMap();
 
@@ -40,5 +41,7 @@ public class GroupProjectProcessor {
                 }
             }
         }
+
+        return groupDao.getAsMap().keySet();
     }
 }
