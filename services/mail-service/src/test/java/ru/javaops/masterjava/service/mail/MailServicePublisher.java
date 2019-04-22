@@ -13,6 +13,7 @@ public class MailServicePublisher {
 
     public static void main(String[] args) {
         DBITestProvider.initDBI();
+//        Endpoint.publish("http://localhost:8080/mail/mailService", new MailServiceImpl());
 
         Endpoint endpoint = Endpoint.create(new MailServiceImpl());
         List<Source> metadata = ImmutableList.of(
