@@ -1,18 +1,27 @@
 package ru.javaops.masterjava.service.mail;
 
-import com.google.common.io.Resources;
 import lombok.extern.slf4j.Slf4j;
 import ru.javaops.masterjava.web.WsClient;
 
 import javax.xml.namespace.QName;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Set;
 
 @Slf4j
 public class MailWSClient {
     private static final WsClient<MailService> WS_CLIENT;
+    private static final String CONFIG_PATH = "/Users/blaec/Documents/javaProjects/apps/masterjava/config/";
 
     static {
-        WS_CLIENT = new WsClient<>(Resources.getResource("wsdl/mailService.wsdl"),
+        URL url = null;
+        try {
+            url = new File(CONFIG_PATH + "wsdl/mailService.wsdl").toURI().toURL();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        WS_CLIENT = new WsClient<>(url,
                 new QName("http://mail.javaops.ru/", "MailServiceImplService"),
                 MailService.class);
 

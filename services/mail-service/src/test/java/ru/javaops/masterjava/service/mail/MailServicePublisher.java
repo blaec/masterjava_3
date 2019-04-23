@@ -18,7 +18,7 @@ public class MailServicePublisher {
         Endpoint endpoint = Endpoint.create(new MailServiceImpl());
         List<Source> metadata = ImmutableList.of(
                 new StreamSource(
-                        new File("services/mail-service/src/main/webapp/WEB-INF/wsdl/mailService.wsdl")));
+                        new File("/Users/blaec/Documents/javaProjects/apps/masterjava/config/wsdl/mailService.wsdl")));
 
         endpoint.setMetadata(metadata);
         endpoint.publish("http://localhost:8080/mail/mailService");
