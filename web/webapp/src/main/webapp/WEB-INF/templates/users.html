@@ -18,10 +18,25 @@
     <tr th:each="user,iter: ${users}">
         <td th:text="${iter.count}"></td>
         <td th:text="${user.fullName}"></td>
-        <td th:utext="${user.email}"></td>
+        <td th:text="${user.email}"></td>
         <td th:text="${user.flag}"></td>
     </tr>
     </tbody>
 </table>
+<form method="POST">
+    <br>
+    <label>Select user from the list below:</label><br>
+    <!--/*@thymesVar id="users" type="java.util.List<ru.javaops.masterjava.persist.model.User>"*/-->
+    <select name="sendTo" multiple="multiple">
+        <option th:each="user: ${users}"
+                th:value="${{user.email}}"
+                th:text="${user.fullName}"></option>
+    </select><br>
+    <label>Subject:</label><br>
+    <input type="text" name="subject"/><br>
+    <label>Body:</label><br>
+    <input type="text" name="body"/><br><br>
+    <button type="submit" name="submit">Send mail to selected users</button>
+</form>
 </body>
 </html>
